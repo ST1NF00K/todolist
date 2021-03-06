@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("TodoList"),
       ),
       body: Observer(builder: (_) {
-        var value = _noteStore.findAllFuture;
+        var value = _noteStore.notes;
         if (value.status == FutureStatus.pending) {
           return Center(
             child: CircularProgressIndicator(),
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return Observer(builder: (_) {
             return ListView.separated(
                 itemBuilder: (context, index) {
-                  var item = _noteStore.notes[index];
+                  var item = _noteStore.notes.value[index];
                   return Observer(builder: (_) {
                     return CheckBoxListTile(
                       onChanged: (b) {
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
                 separatorBuilder: (context, index) => SizedBox(height: 10.0),
-                itemCount: _noteStore.notes.length);
+                itemCount: _noteStore.notes.value.length);
           });
         }
       }),
