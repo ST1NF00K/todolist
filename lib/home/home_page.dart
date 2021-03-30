@@ -21,7 +21,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void didChangeDependencies() {
     if (_noteStore == null) {
       _noteStore = _noteStore = NoteStoreFactory.create();
-      _noteStore.findAll();
       _disposer =
           reaction((_) => _noteStore.saveFuture.status, (FutureStatus status) {
         if (status == FutureStatus.fulfilled) {
@@ -29,7 +28,6 @@ class _MyHomePageState extends State<MyHomePage> {
           Navigator.of(context).pop();
         }
       });
-      super.didChangeDependencies();
     }
   }
 
