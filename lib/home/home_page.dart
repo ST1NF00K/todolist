@@ -66,9 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       _noteStore.remove(item),
                   child: CheckBoxListTile(
                     onChanged: (b) {
-                    //  setState(() {
+                      setState(() {
                         _noteStore.check(item);
-                    //  });
+                     });
                     },
                     isChecked: item.isChecked,
                     title: Text(item.title),
@@ -96,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         _noteStore.save(
                           Note(
-                            _noteContent.text.hashCode,
                             _noteContent.text,
                             false,
                           ),

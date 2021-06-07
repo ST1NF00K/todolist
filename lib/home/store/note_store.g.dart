@@ -39,6 +39,21 @@ mixin _$NoteStore on _NoteStoreBase, Store {
     });
   }
 
+  final _$deleteFutureAtom = Atom(name: '_NoteStoreBase.deleteFuture');
+
+  @override
+  ObservableFuture<dynamic> get deleteFuture {
+    _$deleteFutureAtom.reportRead();
+    return super.deleteFuture;
+  }
+
+  @override
+  set deleteFuture(ObservableFuture<dynamic> value) {
+    _$deleteFutureAtom.reportWrite(value, super.deleteFuture, () {
+      super.deleteFuture = value;
+    });
+  }
+
   final _$_NoteStoreBaseActionController =
       ActionController(name: '_NoteStoreBase');
 
@@ -76,10 +91,22 @@ mixin _$NoteStore on _NoteStoreBase, Store {
   }
 
   @override
+  void remove(Note note) {
+    final _$actionInfo = _$_NoteStoreBaseActionController.startAction(
+        name: '_NoteStoreBase.remove');
+    try {
+      return super.remove(note);
+    } finally {
+      _$_NoteStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 notes: ${notes},
-saveFuture: ${saveFuture}
+saveFuture: ${saveFuture},
+deleteFuture: ${deleteFuture}
     ''';
   }
 }

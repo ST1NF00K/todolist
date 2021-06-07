@@ -147,18 +147,14 @@ class _$FloorNoteDao extends FloorNoteDao {
     return _queryAdapter.queryListStream('SELECT * FROM Note',
         queryableName: 'Note',
         isView: false,
-        mapper: (Map<String, dynamic> row) => Note(
-            row['id'] as int,
-            row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 
   @override
   Future<List<Note>> findAllNotes() async {
     return _queryAdapter.queryList('SELECT * FROM Note',
-        mapper: (Map<String, dynamic> row) => Note(
-            row['id'] as int,
-            row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 
@@ -168,9 +164,7 @@ class _$FloorNoteDao extends FloorNoteDao {
         arguments: <dynamic>[id],
         queryableName: 'Note',
         isView: false,
-        mapper: (Map<String, dynamic> row) => Note(
-            row['id'] as int,
-            row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 
@@ -178,9 +172,7 @@ class _$FloorNoteDao extends FloorNoteDao {
   Future<Note> findById(int id) async {
     return _queryAdapter.query('SELECT * FROM Note WHERE id = ?',
         arguments: <dynamic>[id],
-        mapper: (Map<String, dynamic> row) => Note(
-            row['id'] as int,
-            row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 

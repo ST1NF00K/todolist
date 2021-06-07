@@ -4,13 +4,14 @@ import 'package:floor/floor.dart';
 class Note {
 
   @primaryKey
-  final int id;
+  @PrimaryKey(autoGenerate: true)//TODO : fix this
+  int id;
   
   final String title;
 
   bool isChecked;
 
-  Note(this.id, this.title, this.isChecked);
+  Note(this.title, this.isChecked);
   
 
   @override
