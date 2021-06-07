@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-import 'package:todolist/home/components/checkbox_list_tile.dart';
-import 'package:todolist/home/model/note.dart';
-import 'package:todolist/home/store/note_store.dart';
+import 'package:todolist/home/data/model/note.dart';
+import 'package:todolist/home/view/components/checkbox_list_tile.dart';
+import 'package:todolist/home/view/store/note_store.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);

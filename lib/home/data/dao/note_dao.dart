@@ -1,4 +1,4 @@
-import 'package:todolist/home/model/note.dart';
+import 'package:todolist/home/data/model/note.dart';
 
 abstract class NoteDao {
   Stream<List<Note>> findAllNotesAsStream();

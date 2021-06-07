@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:todolist/home/dao/note_dao.dart';
-import 'package:todolist/home/model/note.dart';
+import 'package:todolist/home/data/dao/note_dao.dart';
+import 'package:todolist/home/data/model/note.dart';
 import 'package:todolist/shared/database/database_factory.dart';
 part 'note_store.g.dart';
 

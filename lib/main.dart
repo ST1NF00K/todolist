@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todolist/home/home_page.dart';
-import 'package:todolist/home/store/note_store.dart';
+import 'package:todolist/home/view/home_page.dart';
+import 'package:todolist/home/view/store/note_store.dart';
 import 'package:todolist/shared/database/database_factory.dart';
 
 Future<void> main() async {

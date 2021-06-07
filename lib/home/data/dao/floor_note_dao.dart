@@ -1,10 +1,9 @@
 import 'package:floor/floor.dart';
-import 'package:todolist/home/dao/note_dao.dart';
-import 'package:todolist/home/model/note.dart';
+import 'package:todolist/home/data/dao/note_dao.dart';
+import 'package:todolist/home/data/model/note.dart';
 
 @dao
-abstract class FloorNoteDao implements NoteDao {  
-  
+abstract class FloorNoteDao implements NoteDao {
   @override
   @Query('SELECT * FROM Note')
   Stream<List<Note>> findAllNotesAsStream();
