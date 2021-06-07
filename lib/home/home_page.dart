@@ -19,18 +19,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void didChangeDependencies() {
-    if (_noteStore == null) {
-      _noteStore = NoteStoreFactory.create();
-      _noteStore.findAll();
-      _disposer =
-          reaction((_) => _noteStore.saveFuture.status, (FutureStatus status) {
-        if (status == FutureStatus.fulfilled) {
-          _noteContent.clear();
-          Navigator.of(context).pop();
-        }
-      });
-      super.didChangeDependencies();
-    }
+    _initStore();
+    super.didChangeDependencies();
   }
 
   @override
@@ -58,56 +48,77 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         } else {
           return Observer(builder: (_) {
-            return ListView.separated(
-              itemBuilder: (context, index) {
-                var item = _noteStore.notes.value[index];
-                return Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (DismissDirection direction) =>
-                      _noteStore.remove(item),
-                  child: CheckBoxListTile(
-                    onChanged: (b) {
-                      setState(() {
-                        _noteStore.check(item);
-                      });
-                    },
-                    isChecked: item.isChecked,
-                    title: Text(item.title),
-                  ),
-                );
-              },
-              separatorBuilder: (context, index) => SizedBox(height: 10.0),
-              itemCount: _noteStore.notes.value.length,
-            );
+            return _listItems();
           });
         }
       }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              child: AlertDialog(
-                title: Text("Add Note"),
-                content: TextField(
-                  controller: _noteContent,
-                ),
-                actions: [
-                  RaisedButton(
-                      child: Text("Add"),
-                      onPressed: () {
-                        _noteStore.save(
-                          Note(
-                            _noteContent.text,
-                            false,
-                          ),
-                        );
-                      })
-                ],
-              ));
-        },
-        tooltip: 'Add Task',
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: _floatingActionButton(),
+    );
+  }
+
+  void _initStore() {
+    if (_noteStore == null) {
+      _noteStore = NoteStoreFactory.create();
+      _noteStore.findAll();
+      _disposer =
+          reaction((_) => _noteStore.saveFuture.status, (FutureStatus status) {
+        if (status == FutureStatus.fulfilled) {
+          _noteContent.clear();
+          Navigator.of(context).pop();
+        }
+      });
+    }
+  }
+
+  Widget _listItems() {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        var item = _noteStore.notes.value[index];
+        return Dismissible(
+          key: UniqueKey(),
+          onDismissed: (DismissDirection direction) => _noteStore.remove(item),
+          child: CheckBoxListTile(
+            onChanged: (b) {
+              setState(() {
+                _noteStore.check(item);
+              });
+            },
+            isChecked: item.isChecked,
+            title: Text(item.title),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) => SizedBox(height: 10.0),
+      itemCount: _noteStore.notes.value.length,
+    );
+  }
+
+  Widget _floatingActionButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        showDialog(
+            context: context,
+            child: AlertDialog(
+              title: Text("Add Note"),
+              content: TextField(
+                controller: _noteContent,
+              ),
+              actions: [
+                RaisedButton(
+                    child: Text("Add"),
+                    onPressed: () {
+                      _noteStore.save(
+                        Note(
+                          _noteContent.text,
+                          false,
+                        ),
+                      );
+                    })
+              ],
+            ));
+      },
+      tooltip: 'Add Task',
+      child: Icon(Icons.add),
     );
   }
 }

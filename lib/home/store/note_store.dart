@@ -14,6 +14,9 @@ abstract class _NoteStoreBase with Store {
   @observable
   ObservableFuture<List<Note>> notes = ObservableFuture.value(null);
 
+  @observable
+  ObservableFuture saveFuture = ObservableFuture.value(null);
+
   @action
   void check(Note note) {
     note.isChecked = !note.isChecked;
@@ -24,9 +27,6 @@ abstract class _NoteStoreBase with Store {
   void findAll() {
     notes = _noteDao.findAllNotes().asObservable();
   }
-
-  @observable
-  ObservableFuture saveFuture = ObservableFuture.value(null);
 
   @action
   void save(Note note) {
