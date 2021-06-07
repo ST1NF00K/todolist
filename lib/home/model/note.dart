@@ -3,14 +3,14 @@ import 'package:floor/floor.dart';
 @entity
 class Note {
 
-  @PrimaryKey(autoGenerate: true)
-  int id;
+  @primaryKey
+  final int id;
   
-  String title;
+  final String title;
 
   bool isChecked;
 
-  Note(this.title, this.isChecked);
+  Note(this.id, this.title, this.isChecked);
   
 
   @override

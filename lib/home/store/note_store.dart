@@ -14,44 +14,31 @@ abstract class _NoteStoreBase with Store {
   @observable
   ObservableFuture<List<Note>> notes = ObservableFuture.value(null);
 
-  // @observable
-  // ObservableList<Note> notes = ObservableList();
-
-  // @observable
-  // ObservableSet<Note> checkedNotes = ObservableSet();
-
   @action
   void check(Note note) {
-    // checkedNotes.add(note);
-    note.isChecked = true;
+    note.isChecked = !note.isChecked;
     _noteDao.updateNote(note);
   }
-
-  @action
-  void uncheck(Note note) {
-    note.isChecked = false;
-    // checkedNotes.remove(note);
-    _noteDao.updateNote(note);
-  }
-
-  bool isChecked(Note note) => notes.value[note.id].isChecked;
-  // bool isChecked(Note note) => checkedNotes.contains(note);
 
   @action
   void findAll() {
-    notes = _noteDao
-        .findAllNotes()
-        // .then((value) => notes = value.asObservable())
-        .asObservable();
+    notes = _noteDao.findAllNotes().asObservable();
   }
 
   @observable
   ObservableFuture saveFuture = ObservableFuture.value(null);
 
+  @observable
+  ObservableFuture deleteFuture = ObservableFuture.value(null);
+
   @action
   void save(Note note) {
     saveFuture = _noteDao.saveNote(note).asObservable();
-    // notes.add(note);
+  }
+
+  @action
+  void remove(Note note) {
+    deleteFuture = _noteDao.deleteNote(note).asObservable();
   }
 }
 

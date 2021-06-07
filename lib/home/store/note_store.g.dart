@@ -54,17 +54,6 @@ mixin _$NoteStore on _NoteStoreBase, Store {
   }
 
   @override
-  void uncheck(Note note) {
-    final _$actionInfo = _$_NoteStoreBaseActionController.startAction(
-        name: '_NoteStoreBase.uncheck');
-    try {
-      return super.uncheck(note);
-    } finally {
-      _$_NoteStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void findAll() {
     final _$actionInfo = _$_NoteStoreBaseActionController.startAction(
         name: '_NoteStoreBase.findAll');

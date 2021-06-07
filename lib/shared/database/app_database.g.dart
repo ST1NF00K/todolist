@@ -80,7 +80,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Note` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT, `isChecked` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `Note` (`id` INTEGER, `title` TEXT, `isChecked` INTEGER, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -147,14 +147,18 @@ class _$FloorNoteDao extends FloorNoteDao {
     return _queryAdapter.queryListStream('SELECT * FROM Note',
         queryableName: 'Note',
         isView: false,
-        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(
+            row['id'] as int,
+            row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 
   @override
   Future<List<Note>> findAllNotes() async {
     return _queryAdapter.queryList('SELECT * FROM Note',
-        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(
+            row['id'] as int,
+            row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 
@@ -164,7 +168,9 @@ class _$FloorNoteDao extends FloorNoteDao {
         arguments: <dynamic>[id],
         queryableName: 'Note',
         isView: false,
-        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(
+            row['id'] as int,
+            row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 
@@ -172,7 +178,9 @@ class _$FloorNoteDao extends FloorNoteDao {
   Future<Note> findById(int id) async {
     return _queryAdapter.query('SELECT * FROM Note WHERE id = ?',
         arguments: <dynamic>[id],
-        mapper: (Map<String, dynamic> row) => Note(row['title'] as String,
+        mapper: (Map<String, dynamic> row) => Note(
+            row['id'] as int,
+            row['title'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0));
   }
 

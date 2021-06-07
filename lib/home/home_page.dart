@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void didChangeDependencies() {
     if (_noteStore == null) {
-      _noteStore = _noteStore = NoteStoreFactory.create();
+      _noteStore = NoteStoreFactory.create();
       _noteStore.findAll();
       _disposer =
           reaction((_) => _noteStore.saveFuture.status, (FutureStatus status) {
@@ -58,24 +58,26 @@ class _MyHomePageState extends State<MyHomePage> {
         } else {
           return Observer(builder: (_) {
             return ListView.separated(
-                itemBuilder: (context, index) {
-                  var item = _noteStore.notes.value[index];
-                  return Observer(builder: (_) {
-                    return CheckBoxListTile(
-                      onChanged: (b) {
-                        if (b) {
-                          _noteStore.check(item);
-                        } else {
-                          _noteStore.uncheck(item);
-                        }
-                      },
-                      isChecked: _noteStore.isChecked(item),
-                      title: Text(item.title),
-                    );
-                  });
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 10.0),
-                itemCount: _noteStore.notes.value.length);
+              itemBuilder: (context, index) {
+                var item = _noteStore.notes.value[index];
+                return Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (DismissDirection direction) =>
+                      _noteStore.remove(item),
+                  child: CheckBoxListTile(
+                    onChanged: (b) {
+                    //  setState(() {
+                        _noteStore.check(item);
+                    //  });
+                    },
+                    isChecked: item.isChecked,
+                    title: Text(item.title),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 10.0),
+              itemCount: _noteStore.notes.value.length,
+            );
           });
         }
       }),
@@ -92,7 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   RaisedButton(
                       child: Text("Add"),
                       onPressed: () {
-                        _noteStore.save(Note(_noteContent.text, false));
+                        _noteStore.save(
+                          Note(
+                            _noteContent.text.hashCode,
+                            _noteContent.text,
+                            false,
+                          ),
+                        );
                       })
                 ],
               ));
@@ -103,4 +111,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
