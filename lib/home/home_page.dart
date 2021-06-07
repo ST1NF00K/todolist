@@ -36,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     _noteContent.dispose();
+    _disposer();
     super.dispose();
   }
 
@@ -68,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onChanged: (b) {
                       setState(() {
                         _noteStore.check(item);
-                     });
+                      });
                     },
                     isChecked: item.isChecked,
                     title: Text(item.title),

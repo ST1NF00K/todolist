@@ -28,9 +28,6 @@ abstract class _NoteStoreBase with Store {
   @observable
   ObservableFuture saveFuture = ObservableFuture.value(null);
 
-  @observable
-  ObservableFuture deleteFuture = ObservableFuture.value(null);
-
   @action
   void save(Note note) {
     saveFuture = _noteDao.saveNote(note).asObservable();
@@ -38,7 +35,7 @@ abstract class _NoteStoreBase with Store {
 
   @action
   void remove(Note note) {
-    deleteFuture = _noteDao.deleteNote(note).asObservable();
+    _noteDao.deleteNote(note).asObservable();
   }
 }
 
