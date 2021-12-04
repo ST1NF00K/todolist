@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+import 'package:todolist/home/data/dao/floor_note_dao.dart';
 import 'package:todolist/home/data/model/note.dart';
 import 'package:todolist/home/view/components/checkbox_list_tile.dart';
 import 'package:todolist/home/view/store/note_store.dart';
@@ -79,9 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onDismissed: (DismissDirection direction) => _noteStore.remove(item),
           child: CheckBoxListTile(
             onChanged: (b) {
-              setState(() {
-                _noteStore.check(item);
-              });
+              _noteStore.check(b, item);
             },
             isChecked: item.isChecked,
             title: Text(item.title),

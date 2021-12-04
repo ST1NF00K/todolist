@@ -43,11 +43,11 @@ mixin _$NoteStore on _NoteStoreBase, Store {
       ActionController(name: '_NoteStoreBase');
 
   @override
-  void check(Note note) {
+  void check(bool isChecked, Note note) {
     final _$actionInfo = _$_NoteStoreBaseActionController.startAction(
         name: '_NoteStoreBase.check');
     try {
-      return super.check(note);
+      return super.check(isChecked, note);
     } finally {
       _$_NoteStoreBaseActionController.endAction(_$actionInfo);
     }

@@ -18,9 +18,9 @@ abstract class _NoteStoreBase with Store {
   ObservableFuture saveFuture = ObservableFuture.value(null);
 
   @action
-  void check(Note note) {
-    note.isChecked = !note.isChecked;
-    _noteDao.updateNote(note);
+  void check(bool isChecked, Note note) {
+    note.isChecked = isChecked;
+    DatabaseProvider().appDatabase.noteDao.updateNote(note).asObservable();
   }
 
   @action
